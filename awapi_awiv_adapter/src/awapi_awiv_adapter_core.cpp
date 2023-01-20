@@ -77,7 +77,7 @@ AutowareIvAdapter::AutowareIvAdapter()
   sub_battery_ = this->create_subscription<tier4_vehicle_msgs::msg::BatteryStatus>(
     "input/battery", 1, std::bind(&AutowareIvAdapter::callbackBattery, this, _1));
   sub_nav_sat_ = this->create_subscription<sensor_msgs::msg::NavSatFix>(
-    "input/nav_sat", 1, std::bind(&AutowareIvAdapter::callbackNavSat, this, _1));
+    "input/nav_sat", rclcpp::SensorDataQoS(), std::bind(&AutowareIvAdapter::callbackNavSat, this, _1));
   sub_autoware_state_ = this->create_subscription<tier4_system_msgs::msg::AutowareState>(
     "input/autoware_state", 1, std::bind(&AutowareIvAdapter::callbackAutowareState, this, _1));
   sub_control_mode_ = this->create_subscription<autoware_auto_vehicle_msgs::msg::ControlModeReport>(
