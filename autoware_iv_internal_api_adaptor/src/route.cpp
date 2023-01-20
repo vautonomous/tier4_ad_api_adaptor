@@ -120,7 +120,12 @@ void Route::setRoute(
   const tier4_external_api_msgs::srv::SetRoute::Request::SharedPtr request,
   const tier4_external_api_msgs::srv::SetRoute::Response::SharedPtr response)
 {
-  pub_planning_route_->publish(convertRoute(request->route));
+  auto route = convertRoute(request->route);
+//  pub_planning_route_->publish(route);
+  geometry_msgs::msg::PoseStamped goal;
+  goal.pose = route.goal_pose;
+  goal.header = route.header;
+  pub_planning_goal_->publish(goal);
   response->status = tier4_api_utils::response_success();
 }
 
